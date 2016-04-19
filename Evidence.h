@@ -1,6 +1,8 @@
 #ifndef MOVIETREE_H
 #define MOVIETREE_H
 
+//sick
+
 struct MovieNode{
     int ranking;
     std::string title;
