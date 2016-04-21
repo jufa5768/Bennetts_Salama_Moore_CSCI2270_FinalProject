@@ -6,21 +6,54 @@
 using namespace std;
 
 MovieTree::MovieTree(){
+    //ctor
+    //////////////////
 }
 MovieTree::~MovieTree(){
 	DeleteAll(root);
 	cout << "Goodbye!" << endl;
-	//DONE//
+	////DONE//////
+}
+
+void Evidence::buildEvidenceLog(char * filename) {
+	infile.open(argv[1]);
+	
+	if(infile.good()){
+		while(getline(infile,line,'\n')){
+			istringstream ss(line);
+			count = 0;
+			while(getline(ss,word,',')){
+				if(count == 0){
+					caseNum = atoi(word.c_str());
+					count++;
+				}
+				else if(count == 1){
+					itemName = word;
+					count++;
+				}
+				else if(count == 2){
+					shelfNumber = atoi(word.c_str());
+					count++;
+				}
+				else if(count == 3){
+					quantity = atoi(word.c_str());
+					count++;
+				}
+			}
+			tree -> addEvidenceNode(caseNum, itemName, shelfNumber, quantity);
+		}
 	}
+    infile.close();
+}
 
-
-void MovieTree::addMovieNode(int ranking, std::string title, int caseNum, int quantity){
-	MovieNode *tmp = new MovieNode;
+void Evidence::addEvidenceeNode(int ranking, std::string title, int caseNum, int quantity){
+	/////////////////
+	EvidenceNode *tmp = new EvidenceNode;
 	tmp = root;
-	MovieNode *parent = new MovieNode;
+	EvidenceNode *parent = new EvidenceNode;
 	parent = NULL;
 
-	MovieNode *node = new MovieNode(ranking, title, caseNum, quantity);
+	EvidenceNode *node = new EvidenceNode(ranking, title, caseNum, quantity);
 	node->leftChild = NULL;
 	node->rightChild = NULL;
 	node->parent = NULL;
@@ -49,71 +82,14 @@ void MovieTree::addMovieNode(int ranking, std::string title, int caseNum, int qu
 	
 }
 
-void MovieTree::findMovie(string title){ //and this
-	bool found = false;
-	MovieNode *node = new MovieNode;
-	node = root;
-	while(node !=NULL){
-		if(title.compare(node->title) < 0){
-			node = node->leftChild;
-		}
-		else if(title.compare(node->title) > 0){
-			node = node->rightChild;
-		}
-		else{
-			cout << "Item Info:" << endl;
-			cout << "===========" << endl;
-			cout << "Ranking:" << node->ranking << endl;
-			cout << "Title:" << node->title << endl;
-			cout << "Case Number:" << node->year << endl;
-			cout << "Quantity:" << node->quantity << endl;
-			found = true;
-			break;
-		}
-	}
-	if(found == false){
-		cout << "Item not found." << endl;
-	}
+void Evidence::rentEvidence(int caseNum, string in_renterName)
+{
+    Evidence *node = findEvidence(caseNum);
+    node->renterName = in_renterName;
 }
 
 
-
-void MovieTree::rentMovie(std::string title){
-	bool found = false;
-	MovieNode *node = new MovieNode;
-	node = root;
-	while(node !=NULL){
-		if(title.compare(node->title) < 0){
-			node = node->leftChild;
-		}
-		else if(title.compare(node->title) > 0){
-			node = node->rightChild;
-		}
-		else{
-			if(node->quantity > 0){
-			cout << "Item has been checked out." << endl;
-			node->quantity = node->quantity-1;
-			cout << "Item Info:" << endl;
-			cout << "===========" << endl;
-			cout << "Ranking:" << node->ranking << endl;
-			cout << "Title:" << node->title << endl;
-			cout << "Case Number:" << node->year << endl;
-			cout << "Quantity:" << node->quantity << endl;
-			found = true;
-			break;
-			}
-			else{
-			cout <<"All Items already checked out." << endl;
-			}
-		}
-	}
-	if(found == false){
-		cout << "Item not found." << endl;
-	}
-}
-
-
-void MovieTree::printMovieInventory(MovieNode *node){
+void Evidence::printEvidenceInventory(EvidenceNode *node){
 	if(node->leftChild !=NULL){
 		printMovieInventory(node->leftChild);
 	}
@@ -123,32 +99,53 @@ void MovieTree::printMovieInventory(MovieNode *node){
 	}
 }
 
-void MovieTree::printMovieInventory(){
+void Evidence::printEvidenceInventory(){
 	printMovieInventory(root);
 }
-MovieNode* MovieTree::search(MovieNode *node,std::string title)
-{
-    // If the node is NULL, we just return. Failed to find node.
-    if (node == NULL)
-        return NULL;
-    // Return this node if it is the one we are searching for
-    else if (node->title == title)
-        return node;
 
-    // Else return the correct recursive call.
-    else
+void Evidence::findEvidence(int caseNum){ //and this
+    EvidenceNode *node = findEvidence(caseNum);
+    if(node !=NULL)
     {
-        if(title.compare(node->title) < 0)
-            return search(node->leftChild,title);
-
-        else
-            return search(node->rightChild,title);
+        cout << "Item Info:" << endl;
+        cout << "===========" << endl;
+        cout << "Ranking:" << node->ranking << endl;
+        cout << "Title:" << node->title << endl;
+        cout << "Case Number:" << node->year << endl;
+        cout << "Quantity:" << node->quantity << endl;
     }
+    else 
+    {
+        cout << "Evidence not found." << endl;
+    }
+    return;
 }
 
-void MovieTree::deleteMovieNode(std::string title){
+EvidenceNode *Evidence::findEvidence(int caseNum)
+{
+    bool found = false;
+	MovieNode *node = new MovieNode;
+	node = root;
+	while(node !=NULL){
+		if(title.compare(node->title) < 0){
+			node = node->leftChild;
+		}
+		else if(title.compare(node->title) > 0){
+			node = node->rightChild;
+		}
+		else{
+			found = true;
+			return node;
+		}
+	}
+	if(found == false){
+		cout << "Item not found." << endl;
+	}
+}
+
+void Evidence::deleteEvidenceNode(std::string title){
     // Create the object for this operation
-    MovieNode * node = search(root,title);
+    EvidenceNode * node = search(root,title);
     // If the movie exists
     if (node != NULL)
     {
@@ -192,7 +189,7 @@ void MovieTree::deleteMovieNode(std::string title){
         else
         {
             // Start on the right sub-tree
-            MovieNode * replacementNode = node->rightChild;
+            EvidenceNode * replacementNode = node->rightChild;
 
             // search for the smallest left child
             while (replacementNode->leftChild != NULL)
@@ -231,21 +228,21 @@ void MovieTree::deleteMovieNode(std::string title){
 }
 
 
-int MovieTree::countMovieNodes(MovieNode *node){
+int Evidence::countEvidenceNodes(EvidenceNode *node){
     if (node == NULL){
         return 0;
 	}
-    return countMovieNodes(node->leftChild) + countMovieNodes(node->rightChild) + 1;
+    return countEvidenceNodes(node->leftChild) + countEvidenceNodes(node->rightChild) + 1;
 
 }
 
-int MovieTree::countMovieNodes(){
-	int count = countMovieNodes(root);
+int Evidence::countEvidenceNodes(){
+	int count = countEvidenceNodes(root);
 	cout<<"Log contains: "<<count<<" items."<<endl;
 	return count;
 }
 
-void MovieTree::DeleteAll(MovieNode * node)
+void Evidence::DeleteAll(EvidenceNode * node)
 {
     // clean to the left
     if (node->leftChild != NULL)
@@ -259,4 +256,3 @@ void MovieTree::DeleteAll(MovieNode * node)
 
     return;
 }
-
