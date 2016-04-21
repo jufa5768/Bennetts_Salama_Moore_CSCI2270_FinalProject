@@ -1,52 +1,53 @@
-#ifndef MOVIETREE_H
-#define MOVIETREE_H
+#ifndef EVIDENCE_H
+#define EVIDENCE_H
 
 struct MovieNode{
-    int ranking;
-    std::string title;
-    int caseNum;
-    int quantity;
-    MovieNode *parent;
-    MovieNode *leftChild;
-    MovieNode *rightChild;
+    std::string itemName; //type of evidence, eg. drugs/guns
+    int caseNum; //case number attached to evidence.
+    int quantity; //amount of evidence attached to individual person
+    std::string renterName; //name of renter
+    int shelfNumber; //shelf number
+    EvidenceNode *parent;
+    EvidenceNode *leftChild;
+    EvidenceNode *rightChild;
 
-    MovieNode(){};
+    EvidenceNode(){};
 
-    MovieNode(int in_ranking, std::string in_title, int in_caseNum, int in_quantity)
+    EvidenceNode(int in_caseNum, std::string in_itemName, int in_shelfNumber, int in_quantity)
     {
-        ranking = in_ranking;
-        title = in_title;
+        itemName = in_itemName;
         caseNum = in_caseNum;
         quantity = in_quantity;
+        shelfNumber = in_shelfNumber;
+        renterName = NULL;
         parent = NULL;
         leftChild = NULL;
         rightChild = NULL;
     }
-
 };
 
-class MovieTree
+class Evidence
 {
-
     public:
-        MovieTree();
-        ~MovieTree();
-        void printMovieInventory();
-        int countMovieNodes();
-        void deleteMovieNode(std::string title);
-        void addMovieNode(int ranking, std::string title, int caseNum, int quantity);
-        void findMovie(std::string title);
-        void rentMovie(std::string title);
+        EvidenceNode();
+        ~EvidenceNode();
+        void printEvidenceInventory();
+        int countEvidenceNodes();
+        void deleteEvidenceNode(std::string title);
+        void addEvidenceNode(int in_caseNum, std::string in_itemName, int in_shelfNumber, int in_quantity); //does not include renter name.
+        void findEvidence(int caseNum); //currently only searches for caseNum
+        void rentEvidence(int caseNum, std::string in_renterName);
+        void returnEvidence(int caseNum) //sets renterName to null
 
     protected:
 
     private:
-        void DeleteAll(MovieNode * node); //use this for the post-order traversal deletion of the tree
-        void printMovieInventory(MovieNode * node);
-        int countMovieNodes(MovieNode *node);
-        MovieNode* search(MovieNode *search,std::string title);
-        MovieNode* treeMinimum(MovieNode *node);
-        MovieNode *root;
+        void DeleteAll(EvidenceNode * node); //use this for the post-order traversal deletion of the tree
+        void printEvidenceInventory(EvidenceNode * node);
+        int countEvidenceNodes(EvidenceNode *node);
+        EvidenceNode* search(EvidenceNode *search,int in_caseNum);
+        EvidenceNode* EvidenceMinimum(EvidenceNode *node);
+        EvidenceNode *root;
 };
 
 #endif // MOVIETREE_H
