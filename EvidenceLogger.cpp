@@ -4,14 +4,17 @@
 #include <string>
 #include <sstream>
 
-#include "MovieTree.cpp"
+
+#include "Evidence.cpp"
 
 using namespace std;
 
 int main(int argc, char* argv[]) {
 	
-	MovieTree *tree = new MovieTree();
-	int rank, year, qty;
+	EvidenceTree *tree = new EvidenceTree();
+	
+	//int type, year, qty;
+	int item, caseNum, qty;
 	string title,line,word;
 	int count = 0;
 	
@@ -33,7 +36,7 @@ int main(int argc, char* argv[]) {
 					count++;
 				}
 				else if(count == 2){
-					year = atoi(word.c_str());
+					caseNum = atoi(word.c_str());
 					count++;
 				}
 				else if(count == 3){
@@ -41,17 +44,17 @@ int main(int argc, char* argv[]) {
 					count++;
 				}
 			}
-			tree -> addMovieNode(rank, title, year, qty);
+			tree -> addMovieNode(rank, title, caseNum, qty);
 		}
 	}
 				
     while (true) {
         cout << "======Main Menu======" << endl; // The Menu
-        cout << "1. Find a movie" << endl;
-        cout << "2. Rent a movie" << endl;
-        cout << "3. Print the inventory" << endl;
-        cout << "4. Delete a movie" << endl;
-        cout << "5. Count the movies" << endl;
+        cout << "1. Search for an Evidence Item" << endl;
+        cout << "2. Check out an Evidence Item" << endl;
+        cout << "3. Print the Evidence inventory" << endl;
+        cout << "4. Delete an Evidence Item" << endl;
+        cout << "5. Count the Evidence Items" << endl;
         cout << "6. Quit" << endl;
         getline(cin, user_command);
 
@@ -59,7 +62,7 @@ int main(int argc, char* argv[]) {
         switch (stoi(user_command)) {
             case 1:
             {
-				cout << "Enter title:" << endl;
+				cout << "Enter Item:" << endl;
 				string input;
 				getline(cin, input , '\n');
 				tree->findMovie(input);
@@ -67,7 +70,7 @@ int main(int argc, char* argv[]) {
             }
             case 2:
             {
-                cout << "Enter title:" << endl;
+                cout << "Enter Item:" << endl;
 				string l;
 				getline(cin, l, '\n');
 				tree->rentMovie(l);
@@ -81,7 +84,7 @@ int main(int argc, char* argv[]) {
             }
 			case 4:
 			{
-				cout << "Enter title:" << endl;
+				cout << "Enter Item:" << endl;
 				string input;
 				getline(cin, input , '\n');
 				tree->deleteMovieNode(input);
@@ -108,4 +111,3 @@ int main(int argc, char* argv[]) {
     }
     return 0;
 }
-
