@@ -1,0 +1,50 @@
+1,0234,hammer,2,4
+2,0001,shotgun,3,2
+3,7777,rubber duck,5,73
+4,6432,heroin -oz,6,45
+5,5457,stick,8,3
+6,4624,bat,9,1
+7,0076,Cd player,4,1
+8,0144,jacket,4,1
+9,4672,100 dollar bills,5,540
+10,5425,hammer,7,1
+11,3450,billy club,10,1
+12,5604,sandwich,9,1
+13,0756,desk lamp,10,3
+14,0086,PPK,3,1
+15,0056,watch,6,1
+16,0003,wallet,7,1
+17,0746,statue,3,1
+18,7207,saw,3,1
+19,2346,cocain -oz,4,87
+20,3856,rocket launcher,7,2
+21,0744,shirt,3,1
+22,4552,briefcase,9,1
+23,2626,cooler,2,6
+24,2850,shotgun,10,2
+25,0769,antlers,2,4
+26,0005,letter opener,7,1
+27,0732,knife,3,1
+28,0004,chainsaw,9,1
+29,0885,moonshine -liters,3,5
+30,0754,stapler,10,1
+31,3793,laptop,4,1
+32,0066,sunglasses,8,2
+33,0378,drapes,3,8
+34,0372,rope,1,1
+35,7300,tire,1,1
+36,0016,cell phone,10,1
+37,0270,coffee mug,4,2
+38,0002,shirt,5,2
+39,1687,lantern,10,2
+40,1180,tent,7,1
+41,5028,trashcan,9,1
+42,7209,Sig P226,2,1
+43,4040,blunderbust,3,1
+44,0065,sword,3,2
+45,0506,swordfish,8,1
+46,1790,fishing pole,8,3
+47,1895,necklace,4,1
+48,0198,shoe,10,1
+49,1737,fence post,1,1
+50,9058,rifle,10,1
