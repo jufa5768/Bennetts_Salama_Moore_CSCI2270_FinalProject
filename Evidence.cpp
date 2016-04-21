@@ -1,7 +1,7 @@
 #include <cstdlib>
 #include <iostream>
 #include <fstream>
-#include "MovieTree.h"
+#include "Evidence.h"
 
 using namespace std;
 
@@ -16,14 +16,14 @@ MovieTree::~MovieTree(){
 }
 
 
-void MovieTree::addMovieNode(int ranking, std::string title, int releaseYear, int quantity){
+void MovieTree::addMovieNode(int ranking, std::string title, int caseNum, int quantity){
 	/////////////////
 	MovieNode *tmp = new MovieNode;
 	tmp = root;
 	MovieNode *parent = new MovieNode;
 	parent = NULL;
 
-	MovieNode *node = new MovieNode(ranking, title, releaseYear, quantity);
+	MovieNode *node = new MovieNode(ranking, title, caseNum, quantity);
 	node->leftChild = NULL;
 	node->rightChild = NULL;
 	node->parent = NULL;
@@ -64,18 +64,18 @@ void MovieTree::findMovie(string title){ //and this
 			node = node->rightChild;
 		}
 		else{
-			cout << "Movie Info:" << endl;
+			cout << "Item Info:" << endl;
 			cout << "===========" << endl;
 			cout << "Ranking:" << node->ranking << endl;
 			cout << "Title:" << node->title << endl;
-			cout << "Year:" << node->year << endl;
+			cout << "Case Number:" << node->year << endl;
 			cout << "Quantity:" << node->quantity << endl;
 			found = true;
 			break;
 		}
 	}
 	if(found == false){
-		cout << "Movie not found." << endl;
+		cout << "Item not found." << endl;
 	}
 }
 
@@ -94,24 +94,24 @@ void MovieTree::rentMovie(std::string title){
 		}
 		else{
 			if(node->quantity > 0){
-			cout << "Movie has been rented." << endl;
+			cout << "Item has been checked out." << endl;
 			node->quantity = node->quantity-1;
-			cout << "Movie Info:" << endl;
+			cout << "Item Info:" << endl;
 			cout << "===========" << endl;
 			cout << "Ranking:" << node->ranking << endl;
 			cout << "Title:" << node->title << endl;
-			cout << "Year:" << node->year << endl;
+			cout << "Case Number:" << node->year << endl;
 			cout << "Quantity:" << node->quantity << endl;
 			found = true;
 			break;
 			}
 			else{
-			cout <<"Movie out of stock." << endl;
+			cout <<"All Items already checked out." << endl;
 			}
 		}
 	}
 	if(found == false){
-		cout << "Movie not found." << endl;
+		cout << "Item not found." << endl;
 	}
 }
 
@@ -120,7 +120,7 @@ void MovieTree::printMovieInventory(MovieNode *node){
 	if(node->leftChild !=NULL){
 		printMovieInventory(node->leftChild);
 	}
-	cout << "Movie: " << node->title << " " << node->quantity << endl;
+	cout << "Item: " << node->title << " " << node->quantity << endl;
 	if(node->rightChild != NULL){
 		printMovieInventory(node->rightChild);
 	}
@@ -207,7 +207,7 @@ void MovieTree::deleteMovieNode(std::string title){
             node->title = replacementNode->title;
             node->quantity = replacementNode->quantity;
             node->ranking = replacementNode->ranking;
-            node->year = replacementNode->year;
+            node->caseNum = replacementNode->year;
 
 
             // If the replacement node has a right child, update the parent
@@ -227,7 +227,7 @@ void MovieTree::deleteMovieNode(std::string title){
     }
     // If it doesn't exist
     else{
-        cout << "Movie not found." << endl;
+        cout << "Item not found." << endl;
 	}
 
 
@@ -244,7 +244,7 @@ int MovieTree::countMovieNodes(MovieNode *node){
 
 int MovieTree::countMovieNodes(){
 	int count = countMovieNodes(root);
-	cout<<"Tree contains: "<<count<<" movies."<<endl;
+	cout<<"Log contains: "<<count<<" items."<<endl;
 	return count;
 }
 
