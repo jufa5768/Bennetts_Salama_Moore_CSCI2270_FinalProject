@@ -13,13 +13,13 @@ struct MovieNode{
 
     EvidenceNode(){};
 
-    EvidenceNode(int in_caseNum, std::string in_itemName, int in_shelfNumber, int in_quantity, std::string in_renterName)
+    EvidenceNode(int in_caseNum, std::string in_itemName, int in_shelfNumber, int in_quantity)
     {
         itemName = in_itemName;
         caseNum = in_caseNum;
         quantity = in_quantity;
         shelfNumber = in_shelfNumber;
-        renterName = in_renterName;
+        renterName = NULL;
         parent = NULL;
         leftChild = NULL;
         rightChild = NULL;
@@ -34,8 +34,10 @@ class Evidence
         void printEvidenceInventory();
         int countEvidenceNodes();
         void deleteEvidenceNode(std::string title);
-        void addEvidenceNode(int in_caseNum, std::string in_itemName, int in_shelfNumber, int in_quantity); //does not include renter name
+        void addEvidenceNode(int in_caseNum, std::string in_itemName, int in_shelfNumber, int in_quantity); //does not include renter name.
+        void findEvidence(int caseNum); //currently only searches for caseNum
         void rentEvidence(int caseNum, std::string in_renterName);
+        void returnEvidence(int caseNum) //sets renterName to null
 
     protected:
 

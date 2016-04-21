@@ -14,8 +14,8 @@ int main(int argc, char* argv[]) {
 	EvidenceTree *tree = new EvidenceTree();
 	
 	//int type, year, qty;
-	int item, caseNum, qty;
-	string title,line,word;
+	int caseNum, shelfNumber, quantity;
+	string itemName,line,word, renterName;
 	int count = 0;
 	
 	ifstream infile;
@@ -28,76 +28,87 @@ int main(int argc, char* argv[]) {
 			count = 0;
 			while(getline(ss,word,',')){
 				if(count == 0){
-					rank = atoi(word.c_str());
-					count++;
-				}
-				else if(count == 1){
-					title = word;
-					count++;
-				}
-				else if(count == 2){
 					caseNum = atoi(word.c_str());
 					count++;
 				}
+				else if(count == 1){
+					itemName = word;
+					count++;
+				}
+				else if(count == 2){
+					shelfNumber = atoi(word.c_str());
+					count++;
+				}
 				else if(count == 3){
-					qty = atoi(word.c_str());
+					quantity = atoi(word.c_str());
 					count++;
 				}
 			}
-			tree -> addMovieNode(rank, title, caseNum, qty);
+			tree -> addEvidenceNode(caseNum, itemName, shelfNumber, quantity);
 		}
 	}
 				
     while (true) {
         cout << "======Main Menu======" << endl; // The Menu
-        cout << "1. Search for an Evidence Item" << endl;
-        cout << "2. Check out an Evidence Item" << endl;
-        cout << "3. Print the Evidence inventory" << endl;
-        cout << "4. Delete an Evidence Item" << endl;
-        cout << "5. Count the Evidence Items" << endl;
-        cout << "6. Quit" << endl;
+        cout << "1. Search for an evidence item" << endl;
+        cout << "2. Check out an evidence item" << endl;
+        cout << "3. Print the evidence inventory" << endl;
+        cout << "4. Delete an evidence item" << endl;
+        cout << "5. Count the evidence items" << endl;
+        cout << "6. Return evidence item" << endl;
+        cout << "7. Quit" << endl;
         getline(cin, user_command);
 
         // Takes whatever the user entered and executes the corresponding function
         switch (stoi(user_command)) {
             case 1:
             {
-				cout << "Enter Item:" << endl;
+				cout << "Enter case number:" << endl;
 				string input;
 				getline(cin, input , '\n');
-				tree->findMovie(input);
+				tree->findEvidence(atoi(input.c_str());
                 break;
             }
             case 2:
             {
-                cout << "Enter Item:" << endl;
+                cout << "Enter case number:" << endl;
 				string l;
-				getline(cin, l, '\n');
-				tree->rentMovie(l);
+                getline(cin, l, '\n');
+                cout << "Enter renter name:" << endl;
+                string 2;
+                getline(cin, 2, '\n');
+				tree->rentEvidence(atoi(1.c_str()), 2);
                 
                 break;
             }
             case 3:
             {
-				tree->printMovieInventory();
+				tree->printEvidenceInventory();
                 break;
             }
 			case 4:
 			{
-				cout << "Enter Item:" << endl;
+				cout << "Enter case number:" << endl;
 				string input;
 				getline(cin, input , '\n');
-				tree->deleteMovieNode(input);
+				tree->deleteEvidenceNode(atoi(input.c_str());
 				break;
 			}
 			case 5:
 			{
-				tree -> countMovieNodes();
+				tree -> countEvidenceNodes();
 				break;
 			}
             case 6:
             {
-                tree -> ~MovieTree();
+                cout << "Enter case number:" << endl;
+                string input;
+                getline(cin, input , '\n');
+                tree->returnEvidence(atoi(input.c_str()));
+            }
+            case 7:
+            {
+                tree -> ~EvidenceNode();
                 return 0; // Finished
             }
             default:
