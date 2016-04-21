@@ -6,18 +6,15 @@
 using namespace std;
 
 MovieTree::MovieTree(){
-    
-    //////////////////
 }
 MovieTree::~MovieTree(){
 	DeleteAll(root);
 	cout << "Goodbye!" << endl;
-	////DONE//////
-}
+	//DONE//
+	}
 
 
 void MovieTree::addMovieNode(int ranking, std::string title, int caseNum, int quantity){
-	/////////////////
 	MovieNode *tmp = new MovieNode;
 	tmp = root;
 	MovieNode *parent = new MovieNode;
