@@ -1,12 +1,15 @@
 #ifndef EVIDENCE_H
 #define EVIDENCE_H
+#include <vector>
 
-struct MovieNode{
-    std::string itemName; //type of evidence, eg. drugs/guns
+struct EvidenceNode{
     int caseNum; //case number attached to evidence.
     int quantity; //amount of evidence attached to individual person
-    std::string renterName; //name of renter
     int shelfNumber; //shelf number
+    std::string renterName; //name of renter
+    
+    std::vector<std::string> evidenceList;
+    
     EvidenceNode *parent;
     EvidenceNode *leftChild;
     EvidenceNode *rightChild;
@@ -15,11 +18,10 @@ struct MovieNode{
 
     EvidenceNode(int in_caseNum, std::string in_itemName, int in_shelfNumber, int in_quantity)
     {
-        itemName = in_itemName;
         caseNum = in_caseNum;
         quantity = in_quantity;
         shelfNumber = in_shelfNumber;
-        renterName = NULL;
+        renterName = "";
         parent = NULL;
         leftChild = NULL;
         rightChild = NULL;
@@ -31,6 +33,7 @@ class Evidence
     public:
         EvidenceNode();
         ~EvidenceNode();
+        void buildEvidenceLog(char *filename);
         void printEvidenceInventory();
         int countEvidenceNodes();
         void deleteEvidenceNode(std::string title);
@@ -50,4 +53,4 @@ class Evidence
         EvidenceNode *root;
 };
 
-#endif // MOVIETREE_H
+#endif // EVIDENCETREE_H
