@@ -1,50 +1,100 @@
-1,0234,hammer,2,4
-2,0001,shotgun,3,2
-3,7777,rubber duck,5,73
-4,6432,heroin -oz,6,45
-5,5457,stick,8,3
-6,4624,bat,9,1
-7,0076,Cd player,4,1
-8,0144,jacket,4,1
-9,4672,100 dollar bills,5,540
-10,5425,hammer,7,1
-11,3450,billy club,10,1
-12,5604,sandwich,9,1
-13,0756,desk lamp,10,3
-14,0086,PPK,3,1
-15,0056,watch,6,1
-16,0003,wallet,7,1
-17,0746,statue,3,1
-18,7207,saw,3,1
-19,2346,cocain -oz,4,87
-20,3856,rocket launcher,7,2
-21,0744,shirt,3,1
-22,4552,briefcase,9,1
-23,2626,cooler,2,6
-24,2850,shotgun,10,2
-25,0769,antlers,2,4
-26,0005,letter opener,7,1
-27,0732,knife,3,1
-28,0004,chainsaw,9,1
-29,0885,moonshine -liters,3,5
-30,0754,stapler,10,1
-31,3793,laptop,4,1
-32,0066,sunglasses,8,2
-33,0378,drapes,3,8
-34,0372,rope,1,1
-35,7300,tire,1,1
-36,0016,cell phone,10,1
-37,0270,coffee mug,4,2
-38,0002,shirt,5,2
-39,1687,lantern,10,2
-40,1180,tent,7,1
-41,5028,trashcan,9,1
-42,7209,Sig P226,2,1
-43,4040,blunderbust,3,1
-44,0065,sword,3,2
-45,0506,swordfish,8,1
-46,1790,fishing pole,8,3
-47,1895,necklace,4,1
-48,0198,shoe,10,1
-49,1737,fence post,1,1
-50,9058,rifle,10,1
+0001,3,2,NONE
+two shotguns,one lamp
+0003,7,1,NONE
+three wallets
+0234,2,4,NONE
+one hammer,one pen,two tin cans
+7777,5,73,NONE
+one rubber duck,sunglasses
+6432,6,45,NONE
+seven heroine oz
+5457,8,3,NONE
+one stick,one iphone
+4624,9,1,NONE
+one bat,two lacrosse sticks
+0076,4,1,NONE
+one cd player,two measuring cups,3 oz flour
+0144,4,1,NONE
+one jacket,one hornets nest
+4672,5,540,NONE
+eleven one hundred dollar bills,five feet of fishing line
+5425,7,1,NONE
+one hammer
+3450,10,1,NONE
+two billy clubs
+5604,9,1,NONE
+one sandwich,one potato peeler
+0756,10,3,NONE
+three desk lamps
+0086,3,1,NONE
+one PPK
+0056,6,1,NONE
+one watch
+0746,3,1,NONE
+one statue
+7207,3,1,NONE
+two saws,four nails
+2346,4,87,NONE
+lb of cocaine,one machete
+3856,7,2,NONE
+two rocket launchers,one stolen car
+0744,3,1,NONE
+one shirt,three socks
+4552,9,1,NONE
+two briefcases
+2626,2,6,NONE
+one cooler,three carrots,one knife
+2850,10,2,NONE
+one shotgun
+0769,2,4,NONE
+two antlers,one jaguar
+0005,7,1,NONE
+one letter opener
+0732,3,1,NONE
+one knife
+0004,9,1,NONE
+three chainsaws,one truck,two gorillas
+0885,3,5,NONE
+three liters of moonshine,sunglasses,one pair daisy dukes
+0754,10,1,NONE
+two staplers,one piece of paper,three pens
+3793,4,1,NONE
+two laptops,one watch,three phones
+0066,8,2,NONE
+one car key,two pairs of sunglasses
+0378,3,8,NONE
+drapes,one candle,three spoons
+0372,1,1,NONE
+five meters rope,one dog collar
+7300,1,1,NONE
+two bike tires,four bikes,one truck
+0016,10,1,NONE
+one cell phone
+0270,4,2,NONE
+two coffee mugs,one tea kettle
+0002,5,2,NONE
+one long-sleeved shirt
+1687,10,2,NONE
+three lanterns,one flashlight,two meters rope
+1180,7,1,NONE
+two stakes,one poker chip,one tent
+5028,9,1,NONE
+one shoe,one popsicle,one trash can
+7209,2,1,NONE
+two Sig P226
+4040,3,1,NONE
+one blunderburst
+0065,3,2,NONE
+three swords
+0506,8,1,NONE
+one swordfish,three harpoons
+1790,8,3,NONE
+one fishing pole
+1895,4,1,NONE
+two gold necklaces,one diamond ring
+0198,10,1,NONE
+one shoe,one shoelace,one belt
+1737,6,2,NONE
+one fence post,two meters rope
+9058,10,1,NONE
+one rifle
