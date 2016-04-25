@@ -97,6 +97,7 @@ void Evidence::findEvidence(string caseNumber) {
             cin >> answer;
             if(answer == 'y' || answer == 'Y') {
                 rentEvidence(caseNumber);
+                return;
             }
             else if(answer == 'n' || answer == 'N')
                 return;
@@ -105,14 +106,14 @@ void Evidence::findEvidence(string caseNumber) {
 }
 
 void Evidence::rentEvidence(string caseNumber) {
-    //do we want to include an option for cases that do not have any evidence?
     EvidenceNode * node = search(root, caseNumber);
     if(node->renterName != "NONE") {
         cout << "The evidence for this case is currently being used by " << node->renterName << "." << endl;
     }
     else {
         string name;
-        cout << "Please enter your first and last name: ";
+        cout << "Please enter your first and last name: " << endl;
+        cin.ignore();
         getline(cin, name);
         node->renterName = name;
         cout << "You have just rented the evidence for case number: " << node->caseNum << endl;
@@ -120,11 +121,22 @@ void Evidence::rentEvidence(string caseNumber) {
         for(int i=0; i<node->evidenceList.size(); i++) {
             cout << setw(3) << "-" << node->evidenceList[i] << endl;
         }
-        cout << endl << "You have one week to these items. If you wish to use them for a longer period of time, please talk to  case manager Jim Lahey.\n" << endl;
+        cout << endl << "You have one week to these items. If you wish to use them for a longer period of time, please talk to the case manager.\n" << endl;
     }
 }
 
-int Evidence::countEvidenceNodes(EvidenceNode *node, int &c) {
+void Evidence::returnEvidence(string caseNumber) {
+    EvidenceNode * found = search(root, caseNumber);
+    cout << "You are returning evidence for case number " << caseNumber << "." << endl;
+    cout << "The evidence for this case includes:" << endl;
+    for(int i=0; i<found->evidenceList.size(); i++) {
+        cout << setw(3) << "-" << found->evidenceList[i] << endl;
+    }
+    cout << "Please return it to storage." << endl;
+    found->renterName = "NONE";
+}
+
+void Evidence::countEvidenceNodes(EvidenceNode *node, int &c) {
     if(node != NULL) {
         if(node->leftChild != NULL)
             countEvidenceNodes(node->leftChild, c);
@@ -139,6 +151,13 @@ int Evidence::countEvidenceNodes(){
     int c(0);
     countEvidenceNodes(root, c);
     return c;
+}
+
+int Evidence::countTotalNodes(EvidenceNode *node){
+    if (node == NULL){
+        return 0;
+    }
+    return countTotalNodes(node->leftChild) + countTotalNodes(node->rightChild) + 1;
 }
 
 void Evidence::printEvidenceInventory() {
@@ -158,8 +177,8 @@ void Evidence::printEvidenceInventory(EvidenceNode *node){
 }
 
 void Evidence::printSpecificCase(EvidenceNode *node) {
-    char blue[] = { 0x1b, '[', '1', ';', '3', '4', 'm', 0 };
-    char normal[] = { 0x1b, '[', '0', ';', '3', '9', 'm', 0 };
+    char blue[] = { 0x1b, '[', '1', ';', '3', '4', 'm', 0 }; //changes case number to blue
+    char normal[] = { 0x1b, '[', '0', ';', '3', '9', 'm', 0 }; //changes text back to white 
 
     if(node == NULL){
         cout << "Case number could not be traced." << endl;
@@ -192,6 +211,90 @@ void Evidence::printSpecificCase(EvidenceNode *node) {
     }
 }
 
+void Evidence::deleteEvidenceNode(string caseNumber) {
+    EvidenceNode *temp = search(root, caseNumber);
+
+    if(temp == NULL) {
+        cout << "Case not found." << endl;
+        return;
+    }
+
+    else if(temp->caseNum == root->caseNum) {
+
+        cout << "Before there were " << countTotalNodes(root) << " cases." << endl;
+        cout << temp->caseNum << " " << temp->rightChild->caseNum <<endl;
+        EvidenceNode * min = EvidenceMinimum(temp->rightChild);
+        if(min->rightChild != NULL) 
+            min->parent->leftChild = min->rightChild;
+        else
+            min->parent->leftChild = NULL;
+        min->leftChild = root->leftChild;
+        min->rightChild = root->rightChild;
+        delete root;
+        root = min;
+        cout << root->caseNum << endl;
+
+        cout << "Now there are " << countTotalNodes(root) << " cases." << endl;
+
+        return;
+    }
+
+    else {
+
+        cout << "Before there were " << countTotalNodes(root) << " cases." << endl;
+
+        //with no children
+        if(temp->leftChild == NULL && temp->rightChild == NULL) {
+            if(temp->parent->leftChild == temp) 
+                temp->parent->leftChild = NULL;
+            else 
+                temp->parent->rightChild = NULL;
+        }
+        //with two children
+        else if (temp->leftChild != NULL && temp->rightChild != NULL) {
+            EvidenceNode * min = EvidenceMinimum(temp->rightChild);
+
+            if(min->rightChild != NULL && min->parent != temp) {
+                min->rightChild->parent = min->parent;
+                min->parent->leftChild = min->rightChild;
+            }
+            else if(min->rightChild == NULL) {
+                min->parent->leftChild = NULL;
+            }
+            
+            if(temp->parent->rightChild == temp)
+                temp->parent->rightChild = min;
+            else
+                temp->parent->leftChild = min;
+            min->parent = temp->parent;
+            min->leftChild = temp->leftChild;
+            if(min->parent->rightChild != min)
+                min->rightChild = temp->rightChild;
+        }
+        //with one child
+        else {
+            if(temp->leftChild != NULL && temp->rightChild == NULL) {
+                temp->leftChild->parent = temp->parent;
+                if(temp->parent->leftChild == temp)
+                    temp->parent->leftChild = temp->leftChild;
+                else
+                    temp->parent->rightChild = temp->leftChild;
+            }
+            else{
+                temp->rightChild->parent == temp->parent;
+                if(temp->parent->leftChild == temp)
+                    temp->parent->leftChild = temp->rightChild;
+                else
+                    temp->parent->rightChild = temp->rightChild;
+            }
+        }
+
+        delete temp;
+
+        cout << "Now there are " << countTotalNodes(root) << " cases." << endl;
+    }
+}
+
 void Evidence::DeleteAll(EvidenceNode* node){
     // clean to the left
     if (node->leftChild != NULL)
@@ -204,7 +307,7 @@ void Evidence::DeleteAll(EvidenceNode* node){
     delete node;
 }
 
-EvidenceNode * Evidence::search(EvidenceNode *root, std::string caseNumber) {
+EvidenceNode * Evidence::search(EvidenceNode *root, string caseNumber) {
     if(root == NULL){
         return NULL;
     }
@@ -218,5 +321,15 @@ EvidenceNode * Evidence::search(EvidenceNode *root, std::string caseNumber) {
         return search(root->rightChild, caseNumber);
     }
 
+    return NULL;
+}
+
+EvidenceNode * Evidence::EvidenceMinimum(EvidenceNode *node) {
+    if(node != NULL) {
+        if(node->leftChild == NULL)
+            return node;            
+        else
+            return EvidenceMinimum(node->leftChild);
+    }
     return NULL;
 }
