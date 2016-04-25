@@ -1,249 +1,198 @@
 #include <cstdlib>
+#include <string>
 #include <iostream>
 #include <fstream>
+#include <sstream>
+#include <iomanip>
 #include "Evidence.h"
 
 using namespace std;
 
-MovieTree::MovieTree(){
-    //ctor
-    //////////////////
-}
-MovieTree::~MovieTree(){
-	DeleteAll(root);
-	cout << "Goodbye!" << endl;
-	////DONE//////
+Evidence::Evidence(){
+    root = NULL;
 }
 
-void Evidence::buildEvidenceLog(char * filename) {
-	infile.open(argv[1]);
-	
-	if(infile.good()){
-		while(getline(infile,line,'\n')){
-			istringstream ss(line);
-			count = 0;
-			while(getline(ss,word,',')){
-				if(count == 0){
-					caseNum = atoi(word.c_str());
-					count++;
-				}
-				else if(count == 1){
-					itemName = word;
-					count++;
-				}
-				else if(count == 2){
-					shelfNumber = atoi(word.c_str());
-					count++;
-				}
-				else if(count == 3){
-					quantity = atoi(word.c_str());
-					count++;
-				}
-			}
-			tree -> addEvidenceNode(caseNum, itemName, shelfNumber, quantity);
-		}
-	}
-    infile.close();
+Evidence::~Evidence(){
+    if(root != NULL) 
+        DeleteAll(root);
 }
 
-void Evidence::addEvidenceeNode(int ranking, std::string title, int caseNum, int quantity){
-	/////////////////
-	EvidenceNode *tmp = new EvidenceNode;
-	tmp = root;
-	EvidenceNode *parent = new EvidenceNode;
-	parent = NULL;
-
-	EvidenceNode *node = new EvidenceNode(ranking, title, caseNum, quantity);
-	node->leftChild = NULL;
-	node->rightChild = NULL;
-	node->parent = NULL;
-
-	while(tmp!=NULL){
-		parent = tmp;
-		if(node->title.compare(tmp->title) < 0){
-			tmp = tmp->leftChild;
-		}
-		else if(node->title.compare(tmp->title) > 0){
-			tmp = tmp->rightChild;
-		}
-	
-	}
-	if(parent == NULL){
-		root = node;
-	}
-	else if(node->title.compare(parent->title) < 0){
-		parent->leftChild = node;
-		node->parent = parent;
-	}
-	else{
-		parent->rightChild = node;
-		node->parent = parent;
-	}
-	
-}
-
-void Evidence::rentEvidence(int caseNum, string in_renterName)
-{
-    Evidence *node = findEvidence(caseNum);
-    node->renterName = in_renterName;
-}
-
-
-void Evidence::printEvidenceInventory(EvidenceNode *node){
-	if(node->leftChild !=NULL){
-		printMovieInventory(node->leftChild);
-	}
-	cout << "Item: " << node->title << " " << node->quantity << endl;
-	if(node->rightChild != NULL){
-		printMovieInventory(node->rightChild);
-	}
-}
-
-void Evidence::printEvidenceInventory(){
-	printMovieInventory(root);
-}
-
-void Evidence::findEvidence(int caseNum){ //and this
-    EvidenceNode *node = findEvidence(caseNum);
-    if(node !=NULL)
-    {
-        cout << "Item Info:" << endl;
-        cout << "===========" << endl;
-        cout << "Ranking:" << node->ranking << endl;
-        cout << "Title:" << node->title << endl;
-        cout << "Case Number:" << node->year << endl;
-        cout << "Quantity:" << node->quantity << endl;
-    }
-    else 
-    {
-        cout << "Evidence not found." << endl;
-    }
-    return;
-}
-
-EvidenceNode *Evidence::findEvidence(int caseNum)
-{
-    bool found = false;
-	MovieNode *node = new MovieNode;
-	node = root;
-	while(node !=NULL){
-		if(title.compare(node->title) < 0){
-			node = node->leftChild;
-		}
-		else if(title.compare(node->title) > 0){
-			node = node->rightChild;
-		}
-		else{
-			found = true;
-			return node;
-		}
-	}
-	if(found == false){
-		cout << "Item not found." << endl;
-	}
-}
-
-void Evidence::deleteEvidenceNode(std::string title){
-    // Create the object for this operation
-    EvidenceNode * node = search(root,title);
-    // If the movie exists
-    if (node != NULL)
-    {
-        // If it has no children
-        if (node->leftChild == NULL && node->rightChild == NULL)
-        {
-            // If this node is the left child, set the parents left child to NULL
-            if (node->parent->leftChild == node){
-                node->parent->leftChild = NULL;
-			}
-            // Else, this node is the right child, set that to NULL
-            else
-                node->parent->rightChild = NULL;
-            // Delete the node
-            delete node;
-
-        }
-        // If it only has a left child
-        else if (node->rightChild == NULL)
-        {
-            if (node->parent->leftChild == node)
-                node->parent->leftChild = node->leftChild;
-            else
-                 node->parent->rightChild = node->leftChild;
-
-            delete node;
-
-        }
-        // If it only has a right child
-        else if (node->leftChild == NULL)
-        {
-            if (node->parent->leftChild == node)
-                node->parent->leftChild = node->rightChild;
-            else
-                 node->parent->rightChild = node->rightChild;
-
-            delete node;
-        }
-
-        // Node has two children, we need the smallest node from the right child
-        else
-        {
-            // Start on the right sub-tree
-            EvidenceNode * replacementNode = node->rightChild;
-
-            // search for the smallest left child
-            while (replacementNode->leftChild != NULL)
-            {
-                replacementNode = replacementNode->leftChild;
+void Evidence::buildEvidenceLog(char *filename) {
+    string line, caseNumber, shelfNumber, suspects, renter, evidence;
+    ifstream fileIn;
+    fileIn.open(filename);
+    if(fileIn.is_open()) {
+        while(!fileIn.eof()) {
+            getline(fileIn, line);
+            stringstream ss(line);
+            getline(ss, caseNumber, ',');
+            getline(ss, shelfNumber, ',');
+            getline(ss, suspects, ',');
+            getline(ss, renter);
+            addEvidenceNode(caseNumber, atoi(shelfNumber.c_str()), atoi(suspects.c_str()), renter);
+            getline(fileIn, line);
+            ss.clear();
+            ss.str(line);
+            while(getline(ss, evidence, ',')) {
+                initializeEvidence(evidence, caseNumber);
             }
-
-            // Swap in all the info from the replacement to this node we are "deleting"
-            node->title = replacementNode->title;
-            node->quantity = replacementNode->quantity;
-            node->ranking = replacementNode->ranking;
-            node->caseNum = replacementNode->year;
-
-
-            // If the replacement node has a right child, update the parent
-            if (replacementNode->rightChild != NULL)
-                replacementNode->rightChild->parent = replacementNode->parent;
-
-            // If the replacement node is a left child
-            if (replacementNode->parent->leftChild == replacementNode)
-                replacementNode->parent->leftChild = replacementNode->rightChild;
-            // If it is a right child
-            else
-                replacementNode->parent->rightChild = replacementNode->rightChild;
-
-            // Delete the node
-            delete replacementNode;
         }
     }
-    // If it doesn't exist
-    else{
-        cout << "Item not found." << endl;
-	}
-
-
+    else {
+        cout << "File error." << endl;
+    }
+    fileIn.close();
 }
 
+void Evidence::addEvidenceNode(string caseNumber, int shelfNumber, int suspects, string renterName) {
+    EvidenceNode *newNode = new EvidenceNode(caseNumber, shelfNumber, suspects, renterName);
+    EvidenceNode *current = root;
+    //test to see if they are initialized to NULL
 
-int Evidence::countEvidenceNodes(EvidenceNode *node){
-    if (node == NULL){
-        return 0;
-	}
-    return countEvidenceNodes(node->leftChild) + countEvidenceNodes(node->rightChild) + 1;
+    if(root == NULL) {
+        root = newNode;
+    }
 
+    else {
+        while(current != NULL) {
+            if(current->caseNum > caseNumber) {
+                if(current->leftChild == NULL) {
+                    current->leftChild = newNode;
+                    newNode->parent = current;
+                    return;
+                }
+                else
+                    current = current->leftChild;
+            }
+            else {
+                if(current->rightChild == NULL) {
+                    current->rightChild = newNode;
+                    newNode->parent = current;
+                    return;
+                }
+                else
+                    current = current->rightChild;
+            }
+        }
+    }
+}
+
+void Evidence::initializeEvidence(string item, string caseNumber) {
+    EvidenceNode * found = search(root, caseNumber);
+    if(found == NULL) {
+        cout << "Case not found." << endl;
+    }
+    else {
+        found->evidenceList.push_back(item);
+    }
+}
+
+void Evidence::findEvidence(string caseNumber) {
+    char answer;
+    EvidenceNode * found = search(root, caseNumber);
+    printSpecificCase(found);
+    if(found != NULL && found->renterName == "NONE") {
+        do {
+            cout << "Do you wish to rent the evidence for this case? (Y/N)" << endl;
+            cin >> answer;
+            if(answer == 'y' || answer == 'Y') {
+                rentEvidence(caseNumber);
+            }
+            else if(answer == 'n' || answer == 'N')
+                return;
+        } while(answer != 'y' || answer != 'Y' || answer != 'n' || answer != 'N');
+    }
+}
+
+void Evidence::rentEvidence(string caseNumber) {
+    //do we want to include an option for cases that do not have any evidence?
+    EvidenceNode * node = search(root, caseNumber);
+    if(node->renterName != "NONE") {
+        cout << "The evidence for this case is currently being used by " << node->renterName << "." << endl;
+    }
+    else {
+        string name;
+        cout << "Please enter your first and last name: ";
+        getline(cin, name);
+        node->renterName = name;
+        cout << "You have just rented the evidence for case number: " << node->caseNum << endl;
+        cout << "Included are the following items:" << endl;
+        for(int i=0; i<node->evidenceList.size(); i++) {
+            cout << setw(3) << "-" << node->evidenceList[i] << endl;
+        }
+        cout << endl << "You have one week to these items. If you wish to use them for a longer period of time, please talk to  case manager Jim Lahey.\n" << endl;
+    }
+}
+
+int Evidence::countEvidenceNodes(EvidenceNode *node, int &c) {
+    if(node != NULL) {
+        if(node->leftChild != NULL)
+            countEvidenceNodes(node->leftChild, c);
+        if(node->renterName == "NONE")
+            c++;
+        if(node->rightChild != NULL)
+            countEvidenceNodes(node->rightChild, c);
+    }   
 }
 
 int Evidence::countEvidenceNodes(){
-	int count = countEvidenceNodes(root);
-	cout<<"Log contains: "<<count<<" items."<<endl;
-	return count;
+    int c(0);
+    countEvidenceNodes(root, c);
+    return c;
 }
 
-void Evidence::DeleteAll(EvidenceNode * node)
-{
+void Evidence::printEvidenceInventory() {
+    printEvidenceInventory(root);
+}
+
+void Evidence::printEvidenceInventory(EvidenceNode *node){
+
+    if(node->leftChild != NULL)
+        printEvidenceInventory(node->leftChild);
+
+    printSpecificCase(node);
+
+    if(node->rightChild != NULL){
+        printEvidenceInventory(node->rightChild);
+    }
+}
+
+void Evidence::printSpecificCase(EvidenceNode *node) {
+    char blue[] = { 0x1b, '[', '1', ';', '3', '4', 'm', 0 };
+    char normal[] = { 0x1b, '[', '0', ';', '3', '9', 'm', 0 };
+
+    if(node == NULL){
+        cout << "Case number could not be traced." << endl;
+    }
+
+    else {
+        cout << endl << "------------------------"<< endl;
+
+        cout << blue << "Case Number: " << node->caseNum << normal << endl;
+
+        cout << "Number of suspects: " << node->numSuspects << endl;
+        cout << "Evidence related to the crime: " << endl;
+
+        if(node->evidenceList.empty())
+            cout << "There is currently no evidence for this case." << endl;
+        else {
+            for(int i=0; i<node->evidenceList.size(); i++) {
+                cout << setw(3) << "-" << node->evidenceList[i] << endl;
+            }
+        }
+        
+        cout << endl << "Shelf number: " << node->shelfNumber << endl;
+
+        if(node->renterName == "NONE")
+            cout << "The evidence for this case is currently available." << endl;
+        else
+            cout << "This case is currently being used by: " << node->renterName << endl;
+
+        cout << "------------------------\n" << endl;
+    }
+}
+
+void Evidence::DeleteAll(EvidenceNode* node){
     // clean to the left
     if (node->leftChild != NULL)
         DeleteAll(node->leftChild);
@@ -251,8 +200,23 @@ void Evidence::DeleteAll(EvidenceNode * node)
     if (node->rightChild != NULL)
         DeleteAll(node->rightChild);
     // delete this node
-    cout<<"Deleting: "<<node->title<<endl;
+    //cout<<"Deleting: "<< node->caseNum << endl;
     delete node;
+}
 
-    return;
+EvidenceNode * Evidence::search(EvidenceNode *root, std::string caseNumber) {
+    if(root == NULL){
+        return NULL;
+    }
+    if(root->caseNum == caseNumber){
+        return root;
+    }
+    if(root->caseNum > caseNumber){
+        return search(root->leftChild, caseNumber);
+    }
+    if(root->caseNum < caseNumber){
+        return search(root->rightChild, caseNumber);
+    }
+
+    return NULL;
 }
