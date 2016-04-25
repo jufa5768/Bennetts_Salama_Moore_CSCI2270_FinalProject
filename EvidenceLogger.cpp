@@ -1,73 +1,72 @@
 #include <iostream>
 #include <string>
-#include <cstdlib.h>
 #include "Evidence.h"
+
+void printMenu();
 
 using namespace std;
 
 int main(int argc, char* argv[]) {
 	
-	EvidenceTree tree;
+	Evidence tree;
 	tree.buildEvidenceLog(argv[1]);
-	int answer = 0;
-	bool repeat = false;
-	string input, renterName;
+	int answer(0);
+    string caseNumber = "";
+	bool repeat = false;  //when the quit option is chosen, "repeat" is changed to true to exit the whilke loop
+	string renterName;
 				
-    while (true) {
+    while (!repeat) {
         printMenu();
         cin >> answer;
 
-        // Takes whatever the user entered and executes the corresponding function
         switch (answer) {
             case 1: 
 				cout << "Enter case number:" << endl;
-				getline(cin, input , '\n');
-				tree.findEvidence(atoi(input.c_str());
+				cin >> caseNumber;
+				tree.findEvidence(caseNumber);
                 break;
             case 2:
                 cout << "Enter case number:" << endl;
-                getline(cin, input, '\n');
-                cout << "Enter renter name:" << endl;
-                getline(cin, renterName, '\n');
-				tree.rentEvidence(atoi(1.c_str()), 2);
+                cin >> caseNumber;
+				tree.rentEvidence(caseNumber);
                 break;
             case 3:
 				tree.printEvidenceInventory();
                 break;
 			case 4:
 				cout << "Enter case number:" << endl;
-				string input;
-				getline(cin, input , '\n');
-				tree.deleteEvidenceNode(atoi(input.c_str());
+				cin >> caseNumber;
+				//tree.deleteEvidenceNode(caseNumber);
 				break;
 			case 5:
-				cout << "There are " << tree.countEvidenceNodes() << " cases." << endl;
+				cout << "There are " << tree.countEvidenceNodes() << "available cases." << endl;
 				break;
             case 6:
                 cout << "Enter case number:" << endl;
-                string input;
-                getline(cin, input , '\n');
-                tree.returnEvidence(atoi(input.c_str()));
+                cin >> caseNumber;
+                //tree.returnEvidence(caseNumber);
                 break;
             case 7:
                 cout << "Goodbye!" << endl;
                 repeat = true;
-            }
             default:
-                cout << "Pick a value from the above list" << endl;
+                if(!repeat)
+                    cout << "Pick choose an option from the list" << endl;
+                break;
+            }
         }
 
-    }
     return 0;
 }
 
 void printMenu() {
 	cout << "======Main Menu======" << endl; // The Menu
-	cout << "1. Search for an evidence item" << endl;
-	cout << "2. Check out an evidence item" << endl;
-	cout << "3. Print the evidence inventory" << endl;
-	cout << "4. Delete an evidence item" << endl;
-	cout << "5. Count the evidence items" << endl;
+	cout << "1. Search for evidence by case number" << endl; 
+	cout << "2. Check out evidence for a case" << endl; //
+	cout << "3. Print evidence inventory" << endl; //prints all the cases and their evidence items
+	cout << "4. Delete a case" << endl; //if the case has been solved, the evidence is destroyed
+	cout << "5. Count the number of open cases" << endl;
 	cout << "6. Return evidence item" << endl;
 	cout << "7. Quit" << endl;
 }
+
