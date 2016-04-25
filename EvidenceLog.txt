@@ -1,100 +1,100 @@
 0001,3,2,NONE
-two shotguns,one lamp
+1 shotguns,1 lamp
 0003,7,1,NONE
-three wallets
+3 wallets
 0234,2,4,NONE
-one hammer,one pen,two tin cans
+1 hammer,1 pen,2 tin cans
 7777,5,73,NONE
-one rubber duck,sunglasses
+1 rubber duck,1 pair sunglasses
 6432,6,45,NONE
-seven heroine oz
+7 heroine oz
 5457,8,3,NONE
-one stick,one iphone
+1 stick,1 iphone
 4624,9,1,NONE
-one bat,two lacrosse sticks
+1 bat,2 lacrosse sticks
 0076,4,1,NONE
-one cd player,two measuring cups,3 oz flour
+1 cd player,2 measuring cups,3 oz flour
 0144,4,1,NONE
-one jacket,one hornets nest
+1 jacket,1 hornets nest
 4672,5,540,NONE
-eleven one hundred dollar bills,five feet of fishing line
+11 one hundred dollar bills,5 ft. fishing line
 5425,7,1,NONE
-one hammer
+1 hammer
 3450,10,1,NONE
-two billy clubs
+2 billy clubs
 5604,9,1,NONE
-one sandwich,one potato peeler
+1 sandwich,1 potato peeler
 0756,10,3,NONE
-three desk lamps
+3 desk lamps
 0086,3,1,NONE
-one PPK
+1 PPK
 0056,6,1,NONE
-one watch
+1 watch
 0746,3,1,NONE
-one statue
+1 statue
 7207,3,1,NONE
-two saws,four nails
+2 saws,4 nails
 2346,4,87,NONE
 lb of cocaine,one machete
 3856,7,2,NONE
-two rocket launchers,one stolen car
+2 rocket launchers,1 stolen car
 0744,3,1,NONE
-one shirt,three socks
+1 shirt,3 socks
 4552,9,1,NONE
-two briefcases
+2 briefcases
 2626,2,6,NONE
-one cooler,three carrots,one knife
+1 cooler,3 carrots,1 knife
 2850,10,2,NONE
-one shotgun
+1 shotgun
 0769,2,4,NONE
-two antlers,one jaguar
+2 antlers,1 jaguar
 0005,7,1,NONE
-one letter opener
+1 letter opener
 0732,3,1,NONE
-one knife
+1 knife
 0004,9,1,NONE
-three chainsaws,one truck,two gorillas
+3 chainsaws,1 truck,2 gorillas
 0885,3,5,NONE
-three liters of moonshine,sunglasses,one pair daisy dukes
+3 liters of moonshine,1 pair sunglasses,1 pair daisy dukes
 0754,10,1,NONE
-two staplers,one piece of paper,three pens
+2 staplers,1 piece of paper,3 pens
 3793,4,1,NONE
-two laptops,one watch,three phones
+2 laptops,1 watch,3 phones
 0066,8,2,NONE
-one car key,two pairs of sunglasses
+1 car key,2 pairs of sunglasses
 0378,3,8,NONE
-drapes,one candle,three spoons
+1 set red drapes,1 candle,3 spoons
 0372,1,1,NONE
-five meters rope,one dog collar
+5 meters rope,1 dog collar
 7300,1,1,NONE
-two bike tires,four bikes,one truck
+2 bike tires,4 bikes,1 truck
 0016,10,1,NONE
-one cell phone
+1 cell phone
 0270,4,2,NONE
-two coffee mugs,one tea kettle
+2 coffee mugs,1 tea kettle
 0002,5,2,NONE
-one long-sleeved shirt
+1 long-sleeved shirt
 1687,10,2,NONE
-three lanterns,one flashlight,two meters rope
+3 lanterns,1 flashlight,2 meters rope
 1180,7,1,NONE
-two stakes,one poker chip,one tent
+2 stakes,1 poker chip,1 tent
 5028,9,1,NONE
-one shoe,one popsicle,one trash can
+1 shoe,1 popsicle,1 trash can
 7209,2,1,NONE
-two Sig P226
+2 Sig P226
 4040,3,1,NONE
-one blunderburst
+1 blunderburst,1/2 piece of bread
 0065,3,2,NONE
-three swords
+3 swords
 0506,8,1,NONE
-one swordfish,three harpoons
+1 swordfish,1 jar mayonnaise
 1790,8,3,NONE
-one fishing pole
+1 fishing pole
 1895,4,1,NONE
-two gold necklaces,one diamond ring
+2 gold necklaces,1 diamond ring
 0198,10,1,NONE
-one shoe,one shoelace,one belt
+1 shoe,1 shoelace,1 belt
 1737,6,2,NONE
-one fence post,two meters rope
-9058,10,1,NONE
-one rifle
+1 fence post,2 meters rope
+9058,10,1,Frank
+1 rifle
