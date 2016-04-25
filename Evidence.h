@@ -42,24 +42,20 @@ class Evidence
         void printEvidenceInventory();
         void rentEvidence(std::string caseNumber);
         int countEvidenceNodes();
-        /*
-        void deleteEvidenceNode(std::string caseNum);
-         //does not include renter name.
-        
-        void returnEvidence(std:string caseNum) //sets renterName to null
-    */
+        void deleteEvidenceNode(std::string caseNumber);
+        void returnEvidence(std::string caseNumber); //sets renterName to null
+
     protected:
 
     private:
         EvidenceNode* search(EvidenceNode *root, std::string caseNumber);
         void printEvidenceInventory(EvidenceNode * node);
         void DeleteAll(EvidenceNode * node); //use this for the post-order traversal deletion of the tree
-        int countEvidenceNodes(EvidenceNode *node, int &c);
-
-        //EvidenceNode* EvidenceMinimum(EvidenceNode *node);
-
+        void countEvidenceNodes(EvidenceNode *node, int &c);
+        //void countTotalCases(EvidenceNode *node, int &c);
+        int countTotalNodes(EvidenceNode *node);
+        EvidenceNode * EvidenceMinimum(EvidenceNode *node);
         EvidenceNode *root;
 };
 
 #endif // EVIDENCETREE_H
-
