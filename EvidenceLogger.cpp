@@ -36,15 +36,15 @@ int main(int argc, char* argv[]) {
 			case 4:
 				cout << "Enter case number:" << endl;
 				cin >> caseNumber;
-				//tree.deleteEvidenceNode(caseNumber);
+				tree.deleteEvidenceNode(caseNumber);
 				break;
 			case 5:
-				cout << "There are " << tree.countEvidenceNodes() << "available cases." << endl;
+				cout << "There are " << tree.countEvidenceNodes() << " available cases." << endl;
 				break;
             case 6:
                 cout << "Enter case number:" << endl;
                 cin >> caseNumber;
-                //tree.returnEvidence(caseNumber);
+                tree.returnEvidence(caseNumber);
                 break;
             case 7:
                 cout << "Goodbye!" << endl;
@@ -61,12 +61,12 @@ int main(int argc, char* argv[]) {
 
 void printMenu() {
 	cout << "======Main Menu======" << endl; // The Menu
-	cout << "1. Search for evidence by case number" << endl; 
+	cout << "1. Search for evidence by case number" << endl; //lists the evidence for a case 
 	cout << "2. Check out evidence for a case" << endl; //
 	cout << "3. Print evidence inventory" << endl; //prints all the cases and their evidence items
 	cout << "4. Delete a case" << endl; //if the case has been solved, the evidence is destroyed
-	cout << "5. Count the number of open cases" << endl;
-	cout << "6. Return evidence item" << endl;
+	cout << "5. Count the number of open cases" << endl; //counts the number of 
+	cout << "6. Return evidence item" << endl; //
 	cout << "7. Quit" << endl;
 }
 
