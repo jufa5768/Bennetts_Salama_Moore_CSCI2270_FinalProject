@@ -2,13 +2,14 @@
 #define EVIDENCE_H
 #include <vector>
 
-struct EvidenceNode{
-    int caseNum; //case number attached to evidence.
-    int quantity; //amount of evidence attached to individual person
-    int shelfNumber; //shelf number
-    std::string renterName; //name of renter
+
+struct EvidenceNode {
+    std::string caseNum; //case number attached to evidence.
+    int numSuspects; //number of suspected criminals
+    int shelfNumber; //shelf number where evidence is kept
+    std::string renterName; //name of detective currently working on the case
     
-    std::vector<std::string> evidenceList;
+    std::vector<std::string> evidenceList; //dynamic list of all pieces of evidence linked to each case
     
     EvidenceNode *parent;
     EvidenceNode *leftChild;
@@ -16,12 +17,12 @@ struct EvidenceNode{
 
     EvidenceNode(){};
 
-    EvidenceNode(int in_caseNum, std::string in_itemName, int in_shelfNumber, int in_quantity)
+    EvidenceNode(std::string in_caseNum, int in_shelfNumber, int in_suspects, std::string in_renterName)
     {
         caseNum = in_caseNum;
-        quantity = in_quantity;
+        numSuspects = in_suspects;
         shelfNumber = in_shelfNumber;
-        renterName = "";
+        renterName = in_renterName;
         parent = NULL;
         leftChild = NULL;
         rightChild = NULL;
@@ -31,26 +32,34 @@ struct EvidenceNode{
 class Evidence
 {
     public:
-        EvidenceNode();
-        ~EvidenceNode();
+        Evidence();
+        ~Evidence();
         void buildEvidenceLog(char *filename);
+        void addEvidenceNode(std::string caseNumber, int shelfNumber, int suspects, std::string renterName);
+        void initializeEvidence(std::string item, std::string caseNumber);
+        void findEvidence(std::string caseNumber); //currently only searches for caseNum
+        void printSpecificCase(EvidenceNode *node);
         void printEvidenceInventory();
+        void rentEvidence(std::string caseNumber);
         int countEvidenceNodes();
-        void deleteEvidenceNode(std::string title);
-        void addEvidenceNode(int in_caseNum, std::string in_itemName, int in_shelfNumber, int in_quantity); //does not include renter name.
-        void findEvidence(int caseNum); //currently only searches for caseNum
-        void rentEvidence(int caseNum, std::string in_renterName);
-        void returnEvidence(int caseNum) //sets renterName to null
-
+        /*
+        void deleteEvidenceNode(std::string caseNum);
+         //does not include renter name.
+        
+        void returnEvidence(std:string caseNum) //sets renterName to null
+    */
     protected:
 
     private:
-        void DeleteAll(EvidenceNode * node); //use this for the post-order traversal deletion of the tree
+        EvidenceNode* search(EvidenceNode *root, std::string caseNumber);
         void printEvidenceInventory(EvidenceNode * node);
-        int countEvidenceNodes(EvidenceNode *node);
-        EvidenceNode* search(EvidenceNode *search,int in_caseNum);
-        EvidenceNode* EvidenceMinimum(EvidenceNode *node);
+        void DeleteAll(EvidenceNode * node); //use this for the post-order traversal deletion of the tree
+        int countEvidenceNodes(EvidenceNode *node, int &c);
+
+        //EvidenceNode* EvidenceMinimum(EvidenceNode *node);
+
         EvidenceNode *root;
 };
 
 #endif // EVIDENCETREE_H
+
