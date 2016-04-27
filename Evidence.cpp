@@ -212,87 +212,34 @@ void Evidence::printSpecificCase(EvidenceNode *node) {
 }
 
 void Evidence::deleteEvidenceNode(string caseNumber) {
-    EvidenceNode *temp = search(root, caseNumber);
+    EvidenceNode *node = search(root, caseNumber);
 
-    if(temp == NULL) {
+    if(node == NULL) {
         cout << "Case not found." << endl;
         return;
     }
-
-    else if(temp->caseNum == root->caseNum) {
-
-        cout << "Before there were " << countTotalNodes(root) << " cases." << endl;
-        cout << temp->caseNum << " " << temp->rightChild->caseNum <<endl;
-        EvidenceNode * min = EvidenceMinimum(temp->rightChild);
-        if(min->rightChild != NULL) 
-            min->parent->leftChild = min->rightChild;
-        else
-            min->parent->leftChild = NULL;
-        min->leftChild = root->leftChild;
-        min->rightChild = root->rightChild;
-        delete root;
-        root = min;
-        cout << root->caseNum << endl;
-
-        cout << "Now there are " << countTotalNodes(root) << " cases." << endl;
-
-        return;
-    }
-
-    else {
-
-        cout << "Before there were " << countTotalNodes(root) << " cases." << endl;
-
-        //with no children
-        if(temp->leftChild == NULL && temp->rightChild == NULL) {
-            if(temp->parent->leftChild == temp) 
-                temp->parent->leftChild = NULL;
-            else 
-                temp->parent->rightChild = NULL;
-        }
-        //with two children
-        else if (temp->leftChild != NULL && temp->rightChild != NULL) {
-            EvidenceNode * min = EvidenceMinimum(temp->rightChild);
-
-            if(min->rightChild != NULL && min->parent != temp) {
-                min->rightChild->parent = min->parent;
-                min->parent->leftChild = min->rightChild;
-            }
-            else if(min->rightChild == NULL) {
-                min->parent->leftChild = NULL;
-            }
-            
-            if(temp->parent->rightChild == temp)
-                temp->parent->rightChild = min;
-            else
-                temp->parent->leftChild = min;
-            min->parent = temp->parent;
-            min->leftChild = temp->leftChild;
-            if(min->parent->rightChild != min)
-                min->rightChild = temp->rightChild;
-        }
-        //with one child
-        else {
-            if(temp->leftChild != NULL && temp->rightChild == NULL) {
-                temp->leftChild->parent = temp->parent;
-                if(temp->parent->leftChild == temp)
-                    temp->parent->leftChild = temp->leftChild;
-                else
-                    temp->parent->rightChild = temp->leftChild;
-            }
-            else{
-                temp->rightChild->parent == temp->parent;
-                if(temp->parent->leftChild == temp)
-                    temp->parent->leftChild = temp->rightChild;
-                else
-                    temp->parent->rightChild = temp->rightChild;
-            }
-        }
-
-        delete temp;
-
-        cout << "Now there are " << countTotalNodes(root) << " cases." << endl;
-    }
+    printSpecificCase(node);
+    EvidenceNode * mover = node->leftChild;
+    while( mover->rightChild )
+        mover = mover->rightChild;
+    if( mover->leftChild )
+        mover->leftChild->parent = mover->parent;
+    if( mover->parent->rightChild == mover )
+        mover->parent->rightChild = mover->leftChild;
+    mover->parent = node->parent;
+    if( node->leftChild != mover )
+        mover->leftChild = node->leftChild;
+    mover->rightChild = node->rightChild;
+    if( mover->parent->leftChild == node )
+        mover->parent->leftChild = mover;
+    else
+        mover->parent->rightChild = mover;
+    delete node;
+    if( mover->rightChild )
+        mover->rightChild->parent = mover;
+    if( mover->leftChild )
+        mover->leftChild->parent = mover;
+    cout<< "Deleted case: " << caseNumber << " successfully!" << endl;
 }
 
 void Evidence::DeleteAll(EvidenceNode* node){
