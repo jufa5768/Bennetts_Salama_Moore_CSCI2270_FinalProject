@@ -212,34 +212,113 @@ void Evidence::printSpecificCase(EvidenceNode *node) {
 }
 
 void Evidence::deleteEvidenceNode(string caseNumber) {
-    EvidenceNode *node = search(root, caseNumber);
+    EvidenceNode *temp = search(root, caseNumber);
 
-    if(node == NULL) {
+    if(temp == NULL) {
         cout << "Case not found." << endl;
         return;
     }
-    printSpecificCase(node);
-    EvidenceNode * mover = node->leftChild;
-    while( mover->rightChild )
-        mover = mover->rightChild;
-    if( mover->leftChild )
-        mover->leftChild->parent = mover->parent;
-    if( mover->parent->rightChild == mover )
-        mover->parent->rightChild = mover->leftChild;
-    mover->parent = node->parent;
-    if( node->leftChild != mover )
-        mover->leftChild = node->leftChild;
-    mover->rightChild = node->rightChild;
-    if( mover->parent->leftChild == node )
-        mover->parent->leftChild = mover;
-    else
-        mover->parent->rightChild = mover;
-    delete node;
-    if( mover->rightChild )
-        mover->rightChild->parent = mover;
-    if( mover->leftChild )
-        mover->leftChild->parent = mover;
-    cout<< "Deleted case: " << caseNumber << " successfully!" << endl;
+
+    cout << "Before there were " << countTotalNodes(root) << " cases." << endl;
+    //cases for deleting a node that is NOT the root
+    if(temp != root) {
+        //with no children
+        if(temp->leftChild == NULL && temp->rightChild == NULL) {
+            if(temp->parent->leftChild == temp) 
+                temp->parent->leftChild = NULL;
+            else 
+                temp->parent->rightChild = NULL;
+        }
+
+        //two children
+        else if (temp->leftChild != NULL && temp->rightChild != NULL) {
+            EvidenceNode * min = EvidenceMinimum(temp->rightChild);
+            if(min == temp->rightChild) {
+                if(temp->parent->rightChild == temp) {
+                    temp->parent->rightChild = min;
+                }
+                else 
+                    temp->parent->leftChild = min;
+                min->parent = temp->parent;
+                min->leftChild = temp->leftChild;
+            }
+            else {
+                min->parent->leftChild = min->rightChild;
+                if(min->rightChild != NULL) {
+                    min->rightChild->parent = min->parent;
+                }
+                min->parent = temp->parent;
+                if(temp->parent->rightChild == temp) {
+                    temp->parent->rightChild = min;
+                }
+                else 
+                    temp->parent->leftChild = min;
+                min->leftChild = temp->leftChild;
+                min->rightChild = temp->rightChild;
+                temp->rightChild->parent = min;
+                temp->leftChild->parent = min;
+            }
+        }
+        //one child
+        else {
+            EvidenceNode * x = NULL;
+            if(temp->leftChild != NULL)
+                x = temp->leftChild;
+            else
+                x = temp->rightChild;
+
+            if(temp->parent->rightChild == temp)
+                temp->parent->rightChild = x;
+            else 
+                temp->parent->leftChild = x;
+            x->parent = temp->parent;
+        }
+    }
+
+    //cases for deleting a node that is the root
+    else {
+        //no children
+        if(temp->leftChild == NULL && temp->rightChild == NULL) {
+            root = NULL;
+        }
+        //two children
+        else if(temp->leftChild != NULL && temp->rightChild != NULL) {
+            EvidenceNode * min = EvidenceMinimum(temp->rightChild);
+            if(min == temp->rightChild) {
+                temp->leftChild->parent = min;
+                min->leftChild = temp->leftChild;
+                min->parent = temp->parent;
+            }
+            else {
+                min->parent->leftChild = min->rightChild;
+                if(min->rightChild != NULL) {
+                    min->rightChild->parent = min->parent;
+                }
+                min->parent = temp->parent;
+                min->leftChild = temp->leftChild;
+                min->rightChild = temp->rightChild;
+                temp->rightChild->parent = min;
+                temp->leftChild->parent = min;
+            }
+            root = min;
+        }
+
+        else {
+            //EvidenceNode * x = NULL;
+            if(temp->leftChild != NULL) {
+                temp->leftChild->parent = temp->parent;
+                root = temp->leftChild;
+            }
+            else {
+                temp->rightChild->parent = temp->parent;
+                root = temp->rightChild;
+            }
+        }
+    }
+
+    delete temp;
+    cout << "Now there are " << countTotalNodes(root) << " cases." << endl;
+
 }
 
 void Evidence::DeleteAll(EvidenceNode* node){
