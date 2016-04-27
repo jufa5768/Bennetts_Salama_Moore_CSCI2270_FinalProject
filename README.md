@@ -39,8 +39,8 @@ The program was written in a Linux environment. We used C++ and a terminal. Acce
 sufficient to run our program.
 
 Group Members:
-Samuel Bennetts
-Zack Salama
+Samuel Bennetts,
+Zack Salama,
 Matt Moore
 
 Contributors: 
