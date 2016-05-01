@@ -1,6 +1,7 @@
 #ifndef EVIDENCE_H
 #define EVIDENCE_H
 #include <vector>
+#include <string>
 
 
 struct EvidenceNode {
