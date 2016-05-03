@@ -9,7 +9,12 @@ using namespace std;
 int main(int argc, char* argv[]) {
 	
 	Evidence tree;
-	tree.buildEvidenceLog(argv[1]);
+	if(argc>1) {
+		tree.buildEvidenceLog(argv[1]);
+	}
+	else {
+		tree.buildEvidenceLog("EvidenceLog.txt");
+	}
 	int answer(0);
     string caseNumber = "";
 	bool repeat = false;  //when the quit option is chosen, "repeat" is changed to true to exit the whilke loop
@@ -69,4 +74,3 @@ void printMenu() {
 	cout << "6. Return evidence item" << endl; //
 	cout << "7. Quit" << endl;
 }
-

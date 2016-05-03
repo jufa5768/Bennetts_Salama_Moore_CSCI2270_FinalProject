@@ -29,6 +29,7 @@ void Evidence::buildEvidenceLog(char *filename) {
             getline(ss, shelfNumber, ',');
             getline(ss, suspects, ',');
             getline(ss, renter);
+            renter.erase(renter.end()-1);
             addEvidenceNode(caseNumber, atoi(shelfNumber.c_str()), atoi(suspects.c_str()), renter);
             getline(fileIn, line);
             ss.clear();
